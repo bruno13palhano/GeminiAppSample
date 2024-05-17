@@ -4,6 +4,7 @@ plugins {
     alias(libs.plugins.secrets.gradle)
     alias(libs.plugins.safe.args)
     alias(libs.plugins.jetbrains.kotlin.serialization)
+    id("kotlin-kapt")
 }
 
 android {
@@ -73,4 +74,8 @@ dependencies {
     implementation(libs.generative.ai)
     implementation(libs.androidx.navigation.compose)
     implementation(libs.kotlinx.serialization.json)
+    kapt(libs.hilt.android.compiler.v248)
+    kapt(libs.androidx.hilt.compiler.v110)
+    implementation(libs.hilt.android.v248)
+    implementation(libs.androidx.hilt.work)
 }
