@@ -21,4 +21,4 @@ dependencyResolutionManagement {
 
 rootProject.name = "GeminiAppSample"
 include(":app")
- 
+include(":core")
