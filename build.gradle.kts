@@ -5,4 +5,5 @@ plugins {
     alias(libs.plugins.secrets.gradle) apply false
     alias(libs.plugins.safe.args) apply false
     alias(libs.plugins.dagger.hilt) apply false
+    alias(libs.plugins.android.library) apply false
 }
