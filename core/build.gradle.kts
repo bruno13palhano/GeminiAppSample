@@ -3,6 +3,7 @@ plugins {
     alias(libs.plugins.jetbrains.kotlin.android)
     alias(libs.plugins.sqldelight)
     alias(libs.plugins.dagger.hilt)
+    alias(libs.plugins.secrets.gradle)
     id("kotlin-kapt")
 }
 
