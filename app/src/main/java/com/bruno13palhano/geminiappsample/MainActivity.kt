@@ -13,7 +13,9 @@ import androidx.compose.ui.Modifier
 import androidx.navigation.compose.rememberNavController
 import com.bruno13palhano.geminiappsample.ui.navigation.AppNavGraph
 import com.bruno13palhano.geminiappsample.ui.theme.GeminiAppSampleTheme
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
