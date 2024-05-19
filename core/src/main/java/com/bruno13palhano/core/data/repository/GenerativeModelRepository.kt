@@ -11,9 +11,9 @@ internal class GenerativeModelRepository @Inject constructor(
     @DefaultRandom private val defaultRandom: GenerativeModel,
     @MoreRandom private val moreRandom: GenerativeModel
 ) : Repository {
-    override suspend fun lessRandomModel(): GenerativeModel = lessRandom
+    override fun lessRandomModel(): GenerativeModel = lessRandom
 
-    override suspend fun defaultModel(): GenerativeModel = defaultRandom
+    override fun defaultModel(): GenerativeModel = defaultRandom
 
-    override suspend fun moreRandoModel(): GenerativeModel = moreRandom
+    override fun moreRandoModel(): GenerativeModel = moreRandom
 }
