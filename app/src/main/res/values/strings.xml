@@ -2,4 +2,7 @@
     <string name="app_name">GeminiAppSample</string>
     <string name="send_label">Send</string>
     <string name="message_label">Message</string>
+    <string name="less_random_label">Less Random</string>
+    <string name="default_label">Default</string>
+    <string name="more_random_label">More Random</string>
 </resources>

@@ -2,18 +2,22 @@ package com.bruno13palhano.geminiappsample.ui.feature.chat
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.google.ai.client.generativeai.GenerativeModel
+import com.bruno13palhano.core.data.repository.Repository
+import com.bruno13palhano.core.di.GenerativeModelRep
 import com.google.ai.client.generativeai.type.asTextOrNull
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted.Companion.WhileSubscribed
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 
-class ChatViewModel(
-    generativeModel: GenerativeModel
+@HiltViewModel
+class ChatViewModel @Inject constructor(
+    @GenerativeModelRep private val repository: Repository
 ) : ViewModel() {
-    private val chat = generativeModel.startChat()
+    private val chat = repository.moreRandoModel().startChat()
 
     private val _uiState: MutableStateFlow<ChatUIState> =
         MutableStateFlow(ChatUIState(chat.history.map { content ->
