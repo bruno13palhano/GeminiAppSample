@@ -1,4 +1,4 @@
-package com.bruno13palhano.geminiappsample.ui.feature.chat
+package com.bruno13palhano.core.model
 
 import java.util.UUID
 
