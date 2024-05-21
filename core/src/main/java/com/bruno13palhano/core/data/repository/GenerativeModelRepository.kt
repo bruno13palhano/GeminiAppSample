@@ -19,7 +19,7 @@ internal class GenerativeModelRepository @Inject constructor(
 ) : Repository {
     private var chat = defaultRandom.startChat()
 
-    override fun messages(): Flow<List<ChatMessage>> {
+    override fun getMessages(): Flow<List<ChatMessage>> {
         return flow {
             emit(
                 chat.history.map {

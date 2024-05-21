@@ -5,7 +5,7 @@ import com.bruno13palhano.core.model.ModelType
 import kotlinx.coroutines.flow.Flow
 
 interface Repository {
-    fun messages(): Flow<List<ChatMessage>>
+    fun getMessages(): Flow<List<ChatMessage>>
     suspend fun sendMessage(message: String): String
     fun setModel(model: ModelType)
 }
