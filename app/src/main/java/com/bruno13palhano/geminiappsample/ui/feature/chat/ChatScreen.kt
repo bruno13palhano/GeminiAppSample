@@ -56,7 +56,7 @@ fun ChatRoute(
     LaunchedEffect(key1 = model) { chatViewModel.setModel(model = model) }
     LaunchedEffect(key1 = Unit) { chatViewModel.getMessages() }
 
-    val chatUIState by chatViewModel.uiState.collectAsState()
+    val messages by chatViewModel.uiState.collectAsState()
     val listState = rememberLazyListState()
     val coroutineScope = rememberCoroutineScope()
 
@@ -79,7 +79,7 @@ fun ChatRoute(
                 .padding(it)
                 .fillMaxSize()
         ) {
-            ChatList(chatMessages = chatUIState.messages, listState =listState)
+            ChatList(chatMessages = messages, listState = listState)
         }
     }
 }
