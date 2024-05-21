@@ -14,7 +14,7 @@ import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Send
+import androidx.compose.material.icons.automirrored.filled.Send
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.CircularProgressIndicator
@@ -24,6 +24,7 @@ import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Scaffold
+import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
@@ -35,16 +36,26 @@ import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.KeyboardCapitalization
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import androidx.lifecycle.viewmodel.compose.viewModel
-import com.bruno13palhano.geminiappsample.GeminiAiViewModelFactory
+import androidx.hilt.navigation.compose.hiltViewModel
+import com.bruno13palhano.core.model.ChatMessage
+import com.bruno13palhano.core.model.Participant
+import com.bruno13palhano.geminiappsample.R
+import com.bruno13palhano.geminiappsample.ui.feature.chat.viewmodel.ChatViewModel
+import com.bruno13palhano.geminiappsample.ui.theme.GeminiAppSampleTheme
 import kotlinx.coroutines.launch
 
 @Composable
 fun ChatRoute(
-    chatViewModel: ChatViewModel = viewModel(factory = GeminiAiViewModelFactory)
+    model: String,
+    chatViewModel: ChatViewModel = hiltViewModel()
 ) {
+    LaunchedEffect(key1 = model) { chatViewModel.setModel(model = model) }
+    LaunchedEffect(key1 = Unit) { chatViewModel.getMessages() }
+
     val chatUIState by chatViewModel.uiState.collectAsState()
     val listState = rememberLazyListState()
     val coroutineScope = rememberCoroutineScope()
@@ -84,6 +95,25 @@ fun ChatList(
     ) {
         items(chatMessages.reversed()) { message ->
             ChatBubbleItem(message)
+        }
+    }
+}
+
+@Preview
+@Composable
+fun ChatListPreview() {
+    GeminiAppSampleTheme {
+        Surface(
+            modifier = Modifier.fillMaxSize(),
+            color = MaterialTheme.colorScheme.background
+        ) {
+            ChatList(
+                chatMessages = listOf(
+                    ChatMessage("12", "Hi, how you doing?", Participant.USER),
+                    ChatMessage("13", "I'm fine, thanks!", Participant.MODEL)
+                ),
+                listState = rememberLazyListState()
+            )
         }
     }
 }
@@ -166,7 +196,7 @@ fun MessageInput(
         ) {
             OutlinedTextField(
                 value = userMessage,
-                label = { Text("Message") },
+                label = { Text(stringResource(R.string.message_label)) },
                 onValueChange = { userMessage = it },
                 keyboardOptions = KeyboardOptions(
                     capitalization = KeyboardCapitalization.Sentences,
@@ -191,8 +221,8 @@ fun MessageInput(
                     .weight(0.15f)
             ) {
                 Icon(
-                    Icons.Default.Send,
-                    contentDescription = "Send",
+                    Icons.AutoMirrored.Filled.Send,
+                    contentDescription = stringResource(id = R.string.send_label),
                     modifier = Modifier
                 )
             }
