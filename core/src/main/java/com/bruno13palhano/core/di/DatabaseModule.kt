@@ -1,6 +1,7 @@
 package com.bruno13palhano.core.di
 
 import android.content.Context
+import cache.HistoryTableQueries
 import com.bruno13palhano.cache.AppDatabase
 import com.bruno13palhano.core.data.database.DatabaseFactory
 import com.bruno13palhano.core.data.database.DriverFactory
@@ -22,4 +23,9 @@ internal object DatabaseModule {
             driverFactory = DriverFactory(context = context)
         ).createDriver()
     }
+
+    @Provides
+    @Singleton
+    fun provideHistoryQueries(database: AppDatabase): HistoryTableQueries =
+        database.historyTableQueries
 }
