@@ -16,6 +16,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import com.bruno13palhano.core.model.ModelType
 import com.bruno13palhano.geminiappsample.R
 import com.bruno13palhano.geminiappsample.ui.theme.GeminiAppSampleTheme
 
@@ -29,10 +30,10 @@ private fun HomeScreen(
     onModelClick: (model: String) -> Unit
 ) {
 
-    val models = listOf(
-        stringResource(id = R.string.less_random_label),
-        stringResource(id = R.string.default_label),
-        stringResource(id = R.string.more_random_label)
+    val models = mapOf(
+        Pair(ModelType.LESS, stringResource(id = R.string.less_random_label)),
+        Pair(ModelType.DEFAULT, stringResource(id = R.string.default_label)),
+        Pair(ModelType.MORE, stringResource(id = R.string.more_random_label))
     )
 
     Scaffold {
@@ -45,13 +46,13 @@ private fun HomeScreen(
                     headlineContent = {
                         Text(
                             modifier = Modifier.fillMaxWidth(),
-                            text = model,
+                            text = model.value,
                             textAlign = TextAlign.Center,
                             style = MaterialTheme.typography.titleMedium
                         )
                     },
                     modifier = Modifier
-                        .clickable { onModelClick(model) }
+                        .clickable { onModelClick(model.key.name) }
                         .padding(8.dp)
                         .fillMaxWidth()
                         .weight(weight = .33f, fill = true)
