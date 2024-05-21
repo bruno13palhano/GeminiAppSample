@@ -1,0 +1,23 @@
+import kotlin.Boolean;
+
+CREATE TABLE HistoryTable (
+    id INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
+    participant TEXT NOT NULL,
+    textContent TEXT NOT NULL,
+    isPending INTEGER AS Boolean NOT NULL
+);
+
+insert:
+INSERT INTO HistoryTable (participant,textContent,isPending) VALUES (?,?,?);
+
+update:
+UPDATE HistoryTable SET participant = ?, textContent = ?, isPending = ? WHERE id = ?;
+
+delete:
+DELETE FROM HistoryTable WHERE id = ?;
+
+getAll:
+SELECT HistoryTable.* FROM HistoryTable;
+
+lastInsertId:
+SELECT  last_insert_rowid();
