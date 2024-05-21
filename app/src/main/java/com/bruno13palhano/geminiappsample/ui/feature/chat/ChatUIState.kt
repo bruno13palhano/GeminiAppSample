@@ -1,6 +1,7 @@
 package com.bruno13palhano.geminiappsample.ui.feature.chat
 
 import androidx.compose.runtime.toMutableStateList
+import com.bruno13palhano.core.model.ChatMessage
 
 class ChatUIState(
     messages: List<ChatMessage> = emptyList()
