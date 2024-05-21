@@ -6,8 +6,6 @@ import com.bruno13palhano.core.data.repository.Repository
 import com.bruno13palhano.core.di.GenerativeModelRep
 import com.bruno13palhano.core.model.ChatMessage
 import com.bruno13palhano.core.model.ModelType
-import com.bruno13palhano.geminiappsample.ui.feature.chat.ChatUIState
-import com.bruno13palhano.core.model.Participant
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted.Companion.WhileSubscribed
@@ -20,13 +18,13 @@ import javax.inject.Inject
 class ChatViewModel @Inject constructor(
     @GenerativeModelRep private val repository: Repository
 ) : ViewModel() {
-    private val _uiState: MutableStateFlow<ChatUIState> =
-        MutableStateFlow(ChatUIState())
+    private val _uiState: MutableStateFlow<List<ChatMessage>> =
+        MutableStateFlow(listOf())
     val uiState = _uiState.asStateFlow()
         .stateIn(
             scope = viewModelScope,
             started = WhileSubscribed(5000),
-            initialValue = ChatUIState()
+            initialValue = listOf()
         )
 
     fun setModel(model: String) {
@@ -36,43 +34,15 @@ class ChatViewModel @Inject constructor(
     fun getMessages() {
         viewModelScope.launch {
             repository.getMessages().collect {
-                _uiState.value = ChatUIState(it)
+                _uiState.value = it
             }
         }
     }
 
     fun sendMessage(message: String) {
-        _uiState.value.addMessage(
-            ChatMessage(
-                text = message,
-                participant = Participant.USER,
-                isPending = true
-            )
-        )
         viewModelScope.launch {
-            try {
-                val response = repository.sendMessage(message = message)
-
-                _uiState.value.replaceLastPendingMessage()
-
-                response.let {
-                    _uiState.value.addMessage(
-                        ChatMessage(
-                            text = it,
-                            participant = Participant.MODEL,
-                            isPending = false
-                        )
-                    )
-                }
-            } catch (e: Exception) {
-                _uiState.value.replaceLastPendingMessage()
-                _uiState.value.addMessage(
-                    ChatMessage(
-                        text = e.localizedMessage,
-                        participant = Participant.ERROR
-                    )
-                )
-            }
+            try { repository.sendMessage(message = message) }
+            catch (e: Exception) { _uiState.value = listOf() }
         }
     }
 }
