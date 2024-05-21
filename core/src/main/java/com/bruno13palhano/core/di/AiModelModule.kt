@@ -44,6 +44,7 @@ internal object AiModelModule {
         generationConfig = generationConfig {
             temperature = 0.1f
             topP = 0.95f
+            maxOutputTokens = 700
         },
         safetySettings = safetySettings
     )
@@ -58,7 +59,7 @@ internal object AiModelModule {
             temperature = 0.5f
             topP = 0.5f
             topK = 40
-            maxOutputTokens = 350
+            maxOutputTokens = 700
         },
         safetySettings = safetySettings
     )
@@ -73,7 +74,7 @@ internal object AiModelModule {
             temperature = 0.97f
             topP = 0.3f
             topK = 60
-            maxOutputTokens = 500
+            maxOutputTokens = 700
         },
         safetySettings = safetySettings
     )
